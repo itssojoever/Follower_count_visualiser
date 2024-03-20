@@ -1,10 +1,13 @@
 import requests
 import lxml
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from bs4 import BeautifulSoup
 
+firefoxOptions = Options()
+firefoxOptions.add_argument("--headless")
 url = input("Please input desired site : ")
-driver = webdriver.Firefox()
+driver = webdriver.Firefox(options=firefoxOptions)
 driver.get(url)
 
 resultOfRequest = BeautifulSoup(driver.page_source, "lxml")
