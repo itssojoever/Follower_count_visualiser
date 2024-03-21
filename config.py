@@ -8,9 +8,42 @@ root = tkinter.Tk()
 root.geometry("410x100")
 root.title("Visualiser configuration")
 root.iconname(None)
+    
+def loadData():
+    if os.path.isfile("config.json"):
+        print ("Config found and loaded")
+        with open("config.json") as f:
+            try:
+                data = json.load(f)
+                chosenHourInput.delete(0, tkinter.END)
+                chosenHourInput.insert(0, int(data["hours"]))
+                chosenMinuteInput.delete(0, tkinter.END)
+                chosenMinuteInput.insert(0, int(data["minutes"]))
+                profileInput.insert(0, data["profileURL"])
+            except json.JSONDecodeError:
+                print ("Config file exists but is improperly configured")
+    else:
+        with open ("configs.json", "w") as f:
+            pass
+                
 
 def saveData():
-    pass
+    profile = profileInput.get().lower().strip()
+    chosenHours = chosenHourInput.get()
+    chosenMinutes = chosenMinuteInput.get()
+
+    information = {
+        "profileURL" : profile,
+        "hours" : chosenHours,
+        "minutes" : chosenMinutes
+    }
+
+    with open("configs.json", "w")as f:
+        json.dump(information, f)
+        if len("configs.json") >1:
+            messagebox.showinfo(title="Saved", message="Saved successfully")
+        else:
+            messagebox.showerror(title="Error", message="Something went wrong")
 
 programFrame1 = tkinter.LabelFrame(root)
 programFrame1.grid(row=0, column=0)
@@ -36,6 +69,8 @@ programFrame3.grid(row=2, column=0)
 
 saveButton = tkinter.Button(programFrame3, text="Save config", command=lambda: saveData())
 saveButton.grid(row=0, column=0)
+
+loadData()
 
 
 root.mainloop()
