@@ -25,8 +25,8 @@ def scrapeData():
 
     startTimer = timer()
     if os.path.isfile("configs.json"):
-        print("Settings found and loaded")
         with open ("configs.json", mode="r") as f:
+            print("Settings found and loaded")
             firefoxOptions = Options()
             firefoxOptions.add_argument("--headless")
             driver = webdriver.Firefox(options=firefoxOptions)

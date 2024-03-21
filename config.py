@@ -10,9 +10,9 @@ root.title("Visualiser configuration")
 root.iconname(None)
     
 def loadData():
-    if os.path.isfile("config.json"):
+    if os.path.isfile("configs.json"):
         print ("Config found and loaded")
-        with open("config.json") as f:
+        with open("configs.json") as f:
             try:
                 data = json.load(f)
                 chosenHourInput.delete(0, tkinter.END)
